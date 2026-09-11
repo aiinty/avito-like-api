@@ -1,6 +1,11 @@
 # Secrets
 .env
 
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+
 # IDE / OS generated files
 .vscode/
 .idea/
