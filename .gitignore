@@ -1,0 +1,11 @@
+# Secrets
+.env
+
+# IDE / OS generated files
+.vscode/
+.idea/
+.venv/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
