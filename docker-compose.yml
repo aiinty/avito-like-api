@@ -18,5 +18,17 @@ services:
     depends_on:
       - postgres
 
+  backend:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    restart: always
+    env_file: 
+      - .env
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      - postgres
+
 volumes:
   pg18_data:

@@ -10,6 +10,8 @@ COPY alembic/ ./alembic/
 
 COPY src/ ./src/
 
+# TODO: run alembic migrations
+
 ENV PYTHONPATH=/app
 
 EXPOSE 8000
