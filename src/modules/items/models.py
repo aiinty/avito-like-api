@@ -12,8 +12,8 @@ if TYPE_CHECKING:
     
     
 class DealType(str, enum.Enum):
-    SALE = "sale",
-    FREE = "free",
+    SALE = "sale"
+    FREE = "free"
     EXCHANGE = "exchange"
     
 class ItemBase(SQLModel):

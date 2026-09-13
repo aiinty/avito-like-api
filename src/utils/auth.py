@@ -4,7 +4,7 @@ from fastapi import Depends, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from src.config import config
 from src.utils.exceptions import ApiException
-from src.modules.users.models import CurrentUser
+from src.modules.users.schemas import CurrentUser
 
 security = HTTPBearer()
 
