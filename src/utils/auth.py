@@ -3,17 +3,20 @@ import jwt
 from fastapi import Depends, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from src.config import config
-from src.utils.exceptions import ApiException
+from src.utils.exceptions import ApiException, UnauthorizedError
 from src.modules.users.schemas import CurrentUser
 
 security = HTTPBearer()
 
-def decode_access_token(token: str) -> CurrentUser:
+def decode_token(token: str, expected_type: str) -> CurrentUser:
     try:
-        payload = jwt.decode(token, config.JWT_SECRET, algorithms=[config.JWT_ALGORITHM])
-        
-        if payload.get("type") != "access":
-            raise ApiException("Invalid token", status.HTTP_401_UNAUTHORIZED)
+        payload = jwt.decode(
+            token, 
+            config.JWT_SECRET, 
+            algorithms=[config.JWT_ALGORITHM]
+        )
+        if payload.get("type") != expected_type:
+            raise UnauthorizedError("Invalid token type")
             
         user_id_str = payload.get("sub")
         if not user_id_str:
@@ -31,5 +34,4 @@ def decode_access_token(token: str) -> CurrentUser:
 async def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(security)
 ) -> CurrentUser:
-    return decode_access_token(credentials.credentials) 
-
+    return decode_token(credentials.credentials, token="access") 

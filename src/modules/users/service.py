@@ -1,11 +1,11 @@
 from src.modules.users.models import User
 from src.modules.users.schemas import TokenResponse, UserLogin, UserRegister, UserUpdate
-from src.config import config
 from src.modules.users.repository import UserRepository
 from src.utils.schemas import Meta, PaginatedResponse
-from src.utils.security import create_access_token, create_refresh_token, decode_token, get_password_hash, verify_password
+from src.utils.security import create_access_token, create_refresh_token, get_password_hash, verify_password
 from src.utils.exceptions import NotFoundError, UnauthorizedError, ValidationError
 from uuid import UUID
+from utils.auth import decode_token
 
 
 class UserService():
@@ -86,14 +86,10 @@ class UserService():
         return TokenResponse(access_token=access_token, refresh_token=refresh_token)
     
     async def refresh_tokens(self, refresh_token: str) -> TokenResponse:
-        payload = decode_token(refresh_token, expected_type="refresh")
-        
-        user_id_str = payload.get("sub")
-        if not user_id_str:
-            raise UnauthorizedError("Invalid token")
+        user = decode_token(refresh_token, expected_type="refresh")
 
-        user = await self.repo.get_by_id(UUID(user_id_str))
-        if not user:
+        db_user = await self.repo.get_by_id(user.id)
+        if not db_user:
             raise UnauthorizedError("Invalid token")
 
         new_access = create_access_token(user_id=str(user.id))
