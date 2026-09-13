@@ -1,9 +1,9 @@
 from typing import Optional
-
 import bcrypt
 import jwt
 from datetime import datetime, timedelta, timezone
 from src.config import config
+from src.utils.exceptions import UnauthorizedError
 
 
 def get_password_hash(password: str) -> str:
@@ -48,3 +48,18 @@ def create_refresh_token(user_id: int | str) -> str:
     }
     
     return jwt.encode(payload, config.JWT_SECRET, algorithm=config.JWT_ALGORITHM)
+
+def decode_token(token: str, expected_type: str) -> dict:
+    try:
+        payload = jwt.decode(
+            token,
+            config.JWT_SECRET,
+            algorithms=[config.JWT_ALGORITHM]
+        )
+        if payload.get("type") != expected_type:
+            raise UnauthorizedError("Invalid token type")
+        return payload
+    except jwt.ExpiredSignatureError:
+        raise UnauthorizedError("Token is expired")
+    except jwt.PyJWTError:
+        raise UnauthorizedError("Invalid token")
