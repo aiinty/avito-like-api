@@ -36,6 +36,7 @@ def create_access_token(user_id: int | str, extra_claims: Optional[dict] = None)
     
     return jwt.encode(payload, config.JWT_SECRET, algorithm=config.JWT_ALGORITHM)
 
+# TODO: fix multiple usage of one refresh token
 def create_refresh_token(user_id: int | str) -> str:
     expire = datetime.now(timezone.utc) + timedelta(days=config.REFRESH_TOKEN_EXPIRE_DAYS)
     

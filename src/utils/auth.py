@@ -4,7 +4,7 @@ from fastapi import Depends, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from src.config import config
 from src.utils.exceptions import ApiException, UnauthorizedError
-from src.modules.users.schemas import CurrentUser
+from src.modules.auth.schemas import CurrentUser
 
 security = HTTPBearer()
 
@@ -31,7 +31,7 @@ def decode_token(token: str, expected_type: str) -> CurrentUser:
     except (jwt.PyJWTError, ValueError):
         raise ApiException("Invalid token", status.HTTP_401_UNAUTHORIZED)
 
-async def get_current_user(
+def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(security)
 ) -> CurrentUser:
-    return decode_token(credentials.credentials, token="access") 
+    return decode_token(credentials.credentials, expected_type="access") 
