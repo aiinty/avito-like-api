@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from src.modules.users.router import users_router
+from src.modules.auth.router import auth_router
 from src.modules.items.models import Item
 from src.modules.messages.models import Message
 from src.modules.categories.models import Category
@@ -28,17 +29,18 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
     ]
     return JSONResponse(
         status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-        content={"message": ", ".join(errors)}
+        content={"error": ", ".join(errors)}
     )
 
 @app.exception_handler(ApiException)
 async def app_exception_handler(request: Request, exc: ApiException):
     return JSONResponse(
         status_code=exc.status_code,
-        content={"message": exc.message},
+        content={"error": exc.message},
     )
 
 # Routers
+app.include_router(auth_router)
 app.include_router(users_router)
 
 # CORS

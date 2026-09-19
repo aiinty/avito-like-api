@@ -3,7 +3,7 @@ from uuid import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import func, select
 from src.modules.users.models import User
-from src.modules.users.schemas import UserRegister
+from src.modules.users.schemas import UserCreate
 
 
 class UserRepository:
@@ -43,12 +43,10 @@ class UserRepository:
         result = await self.session.execute(query)
         return result.scalars().all()
 
-    async def create(self, data: UserRegister, hashed_password: str) -> User:
+    async def create(self, data: UserCreate) -> User:
         payload = data.model_dump()
-        payload.pop("password", None)
-        payload["hashed_password"] = hashed_password
-
         db_user = User(**payload)
+        
         self.session.add(db_user)
         await self.session.flush()
         await self.session.refresh(db_user)
