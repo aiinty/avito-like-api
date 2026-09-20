@@ -16,4 +16,3 @@ class Category(CategoryBase, table=True):
 
     items: list["Item"] = Relationship(back_populates="category")
     
-    

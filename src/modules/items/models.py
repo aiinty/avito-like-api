@@ -1,8 +1,8 @@
-import enum
 from datetime import datetime
 from typing import TYPE_CHECKING, Optional
 from uuid import UUID
 from sqlmodel import Field, Relationship, SQLModel
+from src.modules.items.schemas import DealType
 from src.db.fields import created_at
 
 if TYPE_CHECKING:
@@ -10,11 +10,6 @@ if TYPE_CHECKING:
     from src.modules.users.models import User
     from src.modules.messages.models import Message
     
-    
-class DealType(str, enum.Enum):
-    SALE = "sale"
-    FREE = "free"
-    EXCHANGE = "exchange"
     
 class ItemBase(SQLModel):
     title: str = Field(min_length=5, max_length=80)
