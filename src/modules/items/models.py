@@ -20,6 +20,7 @@ class ItemBase(SQLModel):
     title: str = Field(min_length=5, max_length=80)
     description: str = Field(min_length=10, max_length=500)
     price: int = Field(default=0, ge=0)
+    photo_url: Optional[str] = Field(default=None)
 
 class Item(ItemBase, table=True):
     __tablename__ = "items"

@@ -6,7 +6,7 @@ if TYPE_CHECKING:
     
 
 class CategoryBase(SQLModel):
-    name: str = Field(min_length=5, max_length=80)
+    name: str = Field(min_length=2, max_length=80)
     emoji: str = Field()
 
 class Category(CategoryBase, table=True):

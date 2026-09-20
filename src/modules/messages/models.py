@@ -17,13 +17,13 @@ class Message(MessageBase, table=True):
     
     __table_args__ = (
         Index(
-            "idx_messages_item_id_user_id", "item_id", "user_id"
+            "idx_messages_item_id_id", "item_id", "id"
         ),
     )
 
     id: Optional[int] = Field(default=None, primary_key=True)
-    item_id: int = Field(foreign_key="items.id", index=True)
-    user_id: UUID = Field(foreign_key="users.id", index=True)
+    item_id: int = Field(foreign_key="items.id", index=True, ondelete="CASCADE")
+    user_id: UUID = Field(foreign_key="users.id")
     
     item: "Item" = Relationship(back_populates="messages")
     user: "User" = Relationship(back_populates="messages")
