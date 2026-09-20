@@ -3,7 +3,7 @@ from src.modules.users.service import UserService
 from src.modules.users.models import User
 from src.modules.auth.schemas import TokenResponse, LoginRequest, RegisterRequest
 from src.utils.security import create_access_token, create_refresh_token, get_password_hash, verify_password
-from src.utils.exceptions import UnauthorizedError, ValidationError
+from src.utils.exceptions import NotFoundError, UnauthorizedError, ValidationError
 from src.utils.auth import decode_token
 
 
@@ -46,7 +46,7 @@ class AuthService():
 
         try:
             db_user = await self.user_service.get_by_id_or_raise(user.id)
-        except:
+        except NotFoundError:
             raise UnauthorizedError("Invalid token")
 
         new_access = create_access_token(user_id=str(db_user.id))
