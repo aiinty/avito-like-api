@@ -29,8 +29,11 @@ services:
       - .env
     ports:
       - "127.0.0.1:8000:8000"
+    volumes:
+      - backend_media:${FILE_PREFIX}
     depends_on:
       - postgres
 
 volumes:
   pg18_data:
+  backend_media:

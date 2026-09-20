@@ -14,6 +14,11 @@ class Config(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int
     REFRESH_TOKEN_EXPIRE_DAYS: int
 
+    FILE_PREFIX: str
+    FILE_FORMATS: list[str]
+    FILE_MAX_DIMENSION: int
+    FILE_MAX_SIZE_MB: int
+    
     model_config = SettingsConfigDict(
         env_file=find_dotenv(".env"), 
         env_file_encoding="utf-8", 

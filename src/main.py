@@ -1,10 +1,14 @@
 import logging
+from pathlib import Path
 from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
+from src.config import config
 from src.modules.users.router import users_router
 from src.modules.auth.router import auth_router
+from src.modules.files.router import files_router
 from src.modules.items.models import Item
 from src.modules.messages.models import Message
 from src.modules.categories.models import Category
@@ -28,7 +32,7 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
         for err in exc.errors()
     ]
     return JSONResponse(
-        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        status_code=status.HTTP_400_BAD_REQUEST,
         content={"error": ", ".join(errors)}
     )
 
@@ -40,6 +44,7 @@ async def app_exception_handler(request: Request, exc: ApiException):
     )
 
 # Routers
+app.include_router(files_router)
 app.include_router(auth_router)
 app.include_router(users_router)
 
@@ -50,6 +55,10 @@ origins = [
     "http://127.0.0.1",
     "http://127.0.0.1:8000",
 ]
+
+# Static files
+Path(config.FILE_PREFIX).mkdir(parents=True, exist_ok=True)
+app.mount(config.FILE_PREFIX, StaticFiles(directory=config.FILE_PREFIX), name="files")
 
 app.add_middleware(
     CORSMiddleware,
