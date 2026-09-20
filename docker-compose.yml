@@ -6,6 +6,8 @@ services:
       - .env
     ports:
       - "127.0.0.1:5432:5432"
+    volumes:
+      - pg18_data:/var/lib/postgresql
 
   pgadmin4:
     image: dpage/pgadmin4:9.14.0
