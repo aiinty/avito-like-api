@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, status
-from src.utils.auth import get_current_user
+from src.modules.auth.dependencies import get_current_user
 from src.modules.items.dependencies import get_item_service
 from src.modules.items.schemas import ItemCreate, ItemRead, ItemUpdate
 from src.modules.items.service import ItemService

@@ -3,7 +3,7 @@ from fastapi.concurrency import run_in_threadpool
 from src.config import config
 from src.modules.auth.schemas import CurrentUser
 from src.modules.files.schemas import UploadResponse
-from src.utils.auth import get_current_user
+from src.modules.auth.dependencies import get_current_user
 from src.utils.files import save_image_sync
 from src.utils.exceptions import ValidationError
 

@@ -9,7 +9,7 @@ from src.modules.auth.schemas import (
     RegisterRequest,
     LoginRequest,
 )
-from src.utils.auth import get_current_user
+from src.modules.auth.dependencies import get_current_user
 
 auth_router = APIRouter(prefix="/auth", tags=["Auth"])
 
@@ -39,4 +39,4 @@ async def refresh_tokens(
     data: RefreshRequest,
     service: AuthService = Depends(get_auth_service)
 ):
-    return await service.refresh_tokens(data.refresh_token)
+    return await service.refresh(data.refresh_token)

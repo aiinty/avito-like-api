@@ -4,7 +4,7 @@ from src.modules.users.service import UserService
 from src.modules.users.schemas import (
     UserRead,
 )
-from src.utils.auth import get_current_user
+from src.modules.auth.dependencies import get_current_user
 
 users_router = APIRouter(prefix="/user", tags=["User"])
 

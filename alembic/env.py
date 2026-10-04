@@ -22,6 +22,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
+from src.modules.auth.models import RefreshToken
 from src.modules.categories.models import Category
 from src.modules.users.models import User
 from src.modules.items.models import Item
