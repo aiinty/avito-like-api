@@ -7,6 +7,7 @@ from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from src.config import config
 from src.modules.users.router import users_router
+from src.modules.items.router import items_router
 from src.modules.auth.router import auth_router
 from src.modules.files.router import files_router
 from src.modules.items.models import Item
@@ -47,6 +48,7 @@ async def app_exception_handler(request: Request, exc: ApiException):
 app.include_router(files_router)
 app.include_router(auth_router)
 app.include_router(users_router)
+app.include_router(items_router)
 
 # CORS
 origins = [

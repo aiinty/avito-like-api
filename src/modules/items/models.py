@@ -27,6 +27,6 @@ class Item(ItemBase, table=True):
     
     category: "Category" = Relationship(back_populates="items")
     author: "User" = Relationship(back_populates="items")
-    messages: list["Message"] = Relationship(back_populates="item")
+    messages: list["Message"] = Relationship(back_populates="item", passive_deletes=True)
     
     created_at: datetime | None = created_at()

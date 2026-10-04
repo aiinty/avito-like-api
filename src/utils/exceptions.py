@@ -16,6 +16,11 @@ class UnauthorizedError(ApiException):
     def __init__(self, message: str):
         super().__init__(message=message, status_code=status.HTTP_401_UNAUTHORIZED)
         
+class ForbiddenError(ApiException):
+    """Error 403: Forbidden"""
+    def __init__(self, message: str):
+        super().__init__(message=message, status_code=status.HTTP_403_FORBIDDEN)
+        
 class NotFoundError(ApiException):
     """Error 404: Entity not found"""
     def __init__(self, message: str):
