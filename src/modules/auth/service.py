@@ -17,9 +17,6 @@ class AuthService():
         self.user_service = user_serice
         self.refresh_token_repo = refresh_token_repo
 
-    async def get_me(self, id: str) -> User:
-        return await self.user_service.get_by_id_or_raise(id)
-
     async def register_user(self, data: RegisterRequest) -> User:
         if await self.user_service.get_user_by_email(data.email):
             raise ValidationError("Email is already registered")

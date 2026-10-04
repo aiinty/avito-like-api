@@ -3,22 +3,14 @@ from src.modules.auth.service import AuthService
 from src.modules.auth.dependencies import get_auth_service
 from src.modules.users.schemas import UserRead
 from src.modules.auth.schemas import (
-    CurrentUser,
     RefreshRequest,
     TokenResponse,
     RegisterRequest,
     LoginRequest,
 )
-from src.modules.auth.dependencies import get_current_user
+
 
 auth_router = APIRouter(prefix="/auth", tags=["Auth"])
-
-@auth_router.get("/me", response_model=UserRead)
-async def get_me(
-    service: AuthService = Depends(get_auth_service),
-    current_user: CurrentUser = Depends(get_current_user)
-):
-    return await service.get_me(current_user.id)
 
 @auth_router.post("/register", response_model=UserRead, status_code=status.HTTP_201_CREATED)
 async def register(
