@@ -43,7 +43,7 @@ def create_access_token(user_id: UUID, extra_claims: Optional[dict] = None) -> s
 def create_refresh_token(user_id: UUID, token_id: UUID) -> str:
     now = datetime.now(timezone.utc)
     expires_at = now + timedelta(
-        minutes=config.REFRESH_TOKEN_EXPIRE_DAYS
+        days=config.REFRESH_TOKEN_EXPIRE_DAYS
     )
     
     payload = {

@@ -5,14 +5,14 @@ from sqlalchemy import DateTime
 from src.db.fields import created_at
 from sqlmodel import Field, SQLModel
 
-
+# TODO: add reuse detection with revoking all tokens of the user
 class RefreshToken(SQLModel, table=True):
     __tablename__ = "refresh_tokens"
 
     id: Optional[UUID] = Field(default_factory=uuid4, primary_key=True)
 
     user_id: UUID = Field(foreign_key="users.id", ondelete="CASCADE", index=True)
-    token: str = Field(unique=True, index=True)
+    token: str = Field(unique=True, index=True) # TODO: hash token in db
 
     expires_at: datetime = Field(sa_type=DateTime(timezone=True))
     created_at: Optional[datetime] = created_at()
