@@ -13,7 +13,7 @@ async def get_categories(
     return await service.get_all_categories()
 
 @category_router.get("/{category_id}", response_model=CategoryRead)
-async def get_item(
+async def get_category(
     category_id: int,
     service: CategoryService = Depends(get_categories_service)
 ):
