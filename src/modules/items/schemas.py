@@ -42,3 +42,9 @@ class ItemUpdate(BaseModel):
     price: Optional[int] = Field(default=None, ge=0)
     photo_url: Optional[str] = Field(default=None)
     category_id: Optional[int] = Field(default=None)
+    
+    @model_validator(mode="after")
+    def check_free_price(self):
+        if self.deal_type == DealType.FREE:
+            self.price = 0
+        return self
