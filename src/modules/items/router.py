@@ -22,14 +22,12 @@ async def get_items(
         category_id=category_id,
     )
 
-
 @items_router.get("/{item_id}", response_model=ItemRead)
 async def get_item(
     item_id: int,
     service: ItemService = Depends(get_item_service),
 ):
     return await service.get_item(item_id)
-
 
 @items_router.post("", response_model=ItemRead, status_code=status.HTTP_201_CREATED)
 async def create_item(
@@ -41,7 +39,6 @@ async def create_item(
         author_id=current_user.id,
         data=data,
     )
-
 
 @items_router.patch("/{item_id}", response_model=ItemRead)
 async def update_item(
@@ -55,7 +52,6 @@ async def update_item(
         user_id=current_user.id,
         data=data,
     )
-
 
 @items_router.delete("/{item_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_item(

@@ -8,10 +8,9 @@ from fastapi.staticfiles import StaticFiles
 from src.config import config
 from src.modules.users.router import users_router
 from src.modules.items.router import items_router
+from src.modules.messages.router import messages_router
 from src.modules.auth.router import auth_router
 from src.modules.files.router import files_router
-from src.modules.items.models import Item
-from src.modules.messages.models import Message
 from src.modules.categories.models import Category
 from src.utils.exceptions import ApiException
     
@@ -49,6 +48,7 @@ app.include_router(files_router)
 app.include_router(auth_router)
 app.include_router(users_router)
 app.include_router(items_router)
+app.include_router(messages_router)
 
 # CORS
 origins = [
