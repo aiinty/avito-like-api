@@ -28,10 +28,7 @@ def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(security),
 ) -> CurrentUser:
     try:
-        payload = decode_token(
-            credentials.credentials,
-            expected_type="access",
-        )
+        payload = decode_token(credentials.credentials)
 
         if payload.get("type") != "access":
             raise UnauthorizedError("Invalid token type")
