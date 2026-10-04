@@ -107,7 +107,7 @@ The main API endpoints are:
 
 | Endpoint | Description |
 | --- | --- |
-| `/auth` | Registration, login, token refresh, current user |
+| `/auth` | Registration, login, token refresh |
 | `/user` | Current user, user update, items of certain user |
 | `/items` | Marketplace items |
 | `/categories` | Categories of items |
