@@ -97,11 +97,13 @@ class ItemRepository:
         for key, value in update_data.items():
             setattr(db_item, key, value)
 
-        self.session.add(db_item)
-
         await self.session.flush()
-
-        return await self.get_by_id(db_item.id)
+        
+        await self.session.refresh(
+            db_item,
+            attribute_names=["category"]
+        )
+        return db_item
 
     async def delete(self, db_item: Item) -> None:
         await self.session.delete(db_item)
