@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker compose --env-file /home/server/Desktop/.env.avito up --build -d
+      run: docker compose up --build -d
