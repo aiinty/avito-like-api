@@ -1,8 +1,8 @@
 # Avito-like API
 
-A training REST API for mobile development.
+A educational REST API for mobile development students.
 
-This project is designed for students to demonstrate how a mobile application can communicate with a REST API. The API provides a simple marketplace model with user authentication, advertisements, categories, messaging, and image uploads.
+This project demonstrates how a mobile application can communicate with a REST API backend, including authentication, user profiles, marketplace listings, messaging, and image uploads.
 
 ## Features
 
@@ -54,20 +54,28 @@ This project is designed for students to demonstrate how a mobile application ca
 
 ## Docker quick start
 
-Create a `.env` file based on `.env.example` and configure the PostgreSQL and JWT settings.
+1. Clone the repository:
 
-Then start the application:
+    ```bash
+    git clone https://github.com/aiinty/avito-like-api.git
+    cd avito-like-api
+    ```
 
-```bash
-docker compose up --build
-```
+2. Create a `.env` file based on `.env.example` and configure it.
+3. Then build and start the application:
+
+    ```bash
+    docker compose up --build
+    ```
 
 During container startup:
 
 1. PostgreSQL is started
-2. Alembic applies pending migrations
-3. Initial data is inserted by the seed script
+2. Alembic applies migrations
+3. Initial categories data is inserted by the `seed.py`
 4. The FastAPI application is started
+
+## API
 
 The API will be available at:
 
@@ -80,6 +88,19 @@ API documentation is available at:
 ```text
 http://localhost:8000/docs
 ```
+
+The main API endpoints are:
+
+| Endpoint | Description |
+| --- | --- |
+| `/auth` | Registration, login, token refresh |
+| `/user` | Current user, user update, items of certain user |
+| `/items` | Marketplace items |
+| `/categories` | Categories of items |
+| `/items/{id}/messages` | Messages for an item |
+| `/upload` | Image uploads |
+
+For the complete list of endpoints and request/response schemas, use the automatically generated Swagger documentation at `/docs`
 
 ## Authentication
 
@@ -100,18 +121,3 @@ The access token is used to access protected endpoints:
 ```http
 Authorization: Bearer <access_token>
 ```
-
-## API
-
-The main API endpoints are:
-
-| Endpoint | Description |
-| --- | --- |
-| `/auth` | Registration, login, token refresh |
-| `/user` | Current user, user update, items of certain user |
-| `/items` | Marketplace items |
-| `/categories` | Categories of items |
-| `/items/{id}/messages` | Messages for an item |
-| `/upload` | Image uploads |
-
-For the complete list of endpoints and request/response schemas, use the automatically generated Swagger documentation at `/docs`
