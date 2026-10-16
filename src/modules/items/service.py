@@ -28,6 +28,7 @@ class ItemService:
         self,
         page: int,
         page_size: int,
+        search: str | None = None,
         category_id: int | None = None,
         author_id: UUID | None = None,
     ) -> PaginatedResponse[Item]:
@@ -36,11 +37,13 @@ class ItemService:
         items = await self.repo.get_all(
             offset=offset,
             limit=page_size,
+            search=search,
             category_id=category_id,
             author_id=author_id,
         )
 
         total_count = await self.repo.count_all(
+            search=search,
             category_id=category_id,
             author_id=author_id,
         )
@@ -58,11 +61,13 @@ class ItemService:
         self,
         page: int,
         page_size: int,
+        search: str | None = None,
         category_id: int | None = None,
     ) -> PaginatedResponse[Item]:
         return await self._get_paginated_data(
             page=page,
             page_size=page_size,
+            search=search,
             category_id=category_id,
         )
 

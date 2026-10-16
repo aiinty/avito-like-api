@@ -2,7 +2,7 @@ from typing import Any, Sequence
 from uuid import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
-from sqlmodel import func, select
+from sqlmodel import func, or_, select
 from src.modules.items.models import Item
 from src.modules.items.schemas import ItemCreate
 
@@ -26,6 +26,7 @@ class ItemRepository:
 
     async def count_all(
         self,
+        search: str | None = None,
         category_id: int | None = None,
         author_id: UUID | None = None,
     ) -> int:
@@ -37,6 +38,14 @@ class ItemRepository:
         if author_id is not None:
             query = query.where(Item.author_id == author_id)
 
+        if search is not None:
+            query = query.where(
+                or_(
+                    Item.title.ilike(f"%{search}%"),
+                    Item.description.ilike(f"%{search}%"),
+                )
+            )
+        
         result = await self.session.execute(query)
         return result.scalar() or 0
 
@@ -44,6 +53,7 @@ class ItemRepository:
         self,
         offset: int = 0,
         limit: int = 100,
+        search: str | None = None,
         category_id: int | None = None,
         author_id: UUID | None = None,
     ) -> Sequence[Item]:
@@ -61,6 +71,14 @@ class ItemRepository:
         if author_id is not None:
             query = query.where(Item.author_id == author_id)
 
+        if search is not None:
+            query = query.where(
+                or_(
+                    Item.title.ilike(f"%{search}%"),
+                    Item.description.ilike(f"%{search}%"),
+                )
+            )
+        
         query = (
             query
             .order_by(Item.id.desc())

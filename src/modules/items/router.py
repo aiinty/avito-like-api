@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Depends, status
+from typing import Optional
+from fastapi import APIRouter, Depends, Query, status
 from src.modules.auth.schemas import CurrentUser
 from src.modules.auth.dependencies import get_current_user
 from src.modules.items.dependencies import get_item_service
@@ -11,14 +12,16 @@ items_router = APIRouter(prefix="/items", tags=["Items"],)
 
 @items_router.get("", response_model=PaginatedResponse[ItemRead])
 async def get_items(
-    page: int = 1,
-    page_size: int = 20,
-    category_id: int | None = None,
+    page: int = Query(default=1, ge=1),
+    page_size: int = Query(default=20, ge=1, le=50),
+    search: Optional[str] = Query(default=None, description="Search by item title or description"),
+    category_id: Optional[int] = Query(default=None),
     service: ItemService = Depends(get_item_service),
 ):
     return await service.get_all_items(
         page=page,
         page_size=page_size,
+        search=search,
         category_id=category_id,
     )
 
