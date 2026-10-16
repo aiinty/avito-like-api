@@ -10,7 +10,7 @@ services:
       timeout: 5s
       retries: 5
     ports:
-      - "127.0.0.1:5432:5432"
+      - "5432:5432"
     volumes:
       - pg18_data:/var/lib/postgresql
 
@@ -21,7 +21,7 @@ services:
     env_file: 
       - .env
     ports:
-      - "127.0.0.1:8080:80"
+      - "8080:80"
     depends_on:
       - postgres
 
@@ -33,7 +33,7 @@ services:
     env_file: 
       - .env
     ports:
-      - "127.0.0.1:8000:8000"
+      - "8000:8000"
     volumes:
       - backend_media:${FILE_PREFIX}
     depends_on:
