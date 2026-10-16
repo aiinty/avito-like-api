@@ -20,6 +20,20 @@ async def seed():
             Category(name="Электроника", emoji="💻"),
             Category(name="Одежда", emoji="👕"),
             Category(name="Автомобили", emoji="🚘"),
+            Category(name="Недвижимость", emoji="🏠"),
+            Category(name="Дом и сад", emoji="🛋️"),
+            Category(name="Бытовая техника", emoji="🔌"),
+            Category(name="Детские товары", emoji="🧸"),
+            Category(name="Хобби и отдых", emoji="🎮"),
+            Category(name="Спорт", emoji="⚽"),
+            Category(name="Животные", emoji="🐾"),
+            Category(name="Услуги", emoji="🛠️"),
+            Category(name="Работа", emoji="💼"),
+            Category(name="Запчасти", emoji="⚙️"),
+            Category(name="Строительство и ремонт", emoji="🔨"),
+            Category(name="Красота и здоровье", emoji="💄"),
+            Category(name="Книги", emoji="📚"),
+            Category(name="Прочее", emoji="📦"),
         ])
 
         await session.commit()
