@@ -30,7 +30,11 @@ async def update_me(
     current_user: CurrentUser = Depends(get_current_user)
 ):
     return await service.self_update_user(current_user.id, data)
-
+@users_router.get("", response_model=list[UserRead]) 
+async def get_all_users(
+service: UserService = Depends (get_user_service),
+) -> list[UserRead]:
+return await service.get_all()
 @users_router.get("/{user_id}/items", response_model=PaginatedResponse[ItemRead],)
 async def get_user_items(
     user_id: UUID,
