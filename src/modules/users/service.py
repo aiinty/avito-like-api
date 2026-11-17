@@ -23,7 +23,7 @@ class UserService():
             offset=offset
             #search=search
         )
-        total_count = await self.repo.count_all(search=search)
+        total_count = await self.repo.count_all()
         
         return PaginatedResponse(
             items=items,
