@@ -2,6 +2,7 @@ from src.modules.users.models import User
 from src.modules.users.schemas import UserCreate, UserUpdate
 from src.modules.users.repository import UserRepository
 from src.utils.schemas import Meta, PaginatedResponse
+from sqlmodel import select
 from src.utils.exceptions import NotFoundError,ValidationError
 from uuid import UUID
 
