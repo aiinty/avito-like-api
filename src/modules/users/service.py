@@ -2,6 +2,7 @@ from src.modules.users.models import User
 from src.modules.users.schemas import UserCreate, UserUpdate
 from src.modules.users.repository import UserRepository
 from src.utils.schemas import Meta, PaginatedResponse
+from sqlmodel import select
 from src.utils.exceptions import NotFoundError,ValidationError
 from uuid import UUID
 
@@ -9,6 +10,11 @@ from uuid import UUID
 class UserService():
     def __init__(self, repo: UserRepository):
         self.repo = repo
+
+    async def get_all(self) -> list[User]:
+        statement = select(User)
+        result = await self.session.execute(statement)
+        return list(result.scalars().all())
     
     async def _get_paginated_data(
         self,
