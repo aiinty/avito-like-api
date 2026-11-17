@@ -32,3 +32,9 @@ async def refresh_tokens(
     service: AuthService = Depends(get_auth_service)
 ):
     return await service.refresh(data.refresh_token)
+
+@auth_router.get("/pr34-one-love/")
+async def pr_34_one_love(
+	who_are_you: str
+) -> str:
+	return f"YAY {who_are_you} from PR34 you cool, man!"
