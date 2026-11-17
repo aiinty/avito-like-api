@@ -10,7 +10,7 @@ services:
       timeout: 5s
       retries: 5
     ports:
-      - "5432:5433"
+      - "5433:5432"
     volumes:
       - pg18_data:/var/lib/postgresql
 

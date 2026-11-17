@@ -30,11 +30,7 @@ async def update_me(
     current_user: CurrentUser = Depends(get_current_user)
 ):
     return await service.self_update_user(current_user.id, data)
-@users_router.get("", response_model=list[UserRead]) 
-async def get_all_users(
-service: UserService = Depends (get_user_service),
-) -> list[UserRead]:
-return await service.get_all()
+
 @users_router.get("/{user_id}/items", response_model=PaginatedResponse[ItemRead],)
 async def get_user_items(
     user_id: UUID,
@@ -47,8 +43,24 @@ async def get_user_items(
         page=page,
         page_size=page_size,
     )
-@users_router.get("/pr34-one-love")
+
+@users_router.get("/pr34-one-love/")
 async def pr_34_one_love(
     who_are_you: str
 ) -> str:
     return f"ЙОУ! {who_are_you} из ПР34 ты крут!"
+
+@users_router.get("/egoryarik/")
+async def egor_yarik_otlichniki(
+    who_are_you: str
+) -> str:
+    return f"ЙОУ! {who_are_you} из ПР34 ты крут!"
+
+@users_router.get("/all-users")
+async def get_all_users(
+    service: UserService = Depends(get_user_service),
+) -> list[UserRead]:
+    users = await service.get_all_users()
+    if not users:
+        raise HTTPException(status_code=404, detail="Пользователей нет - все сбежали")
+    return users
