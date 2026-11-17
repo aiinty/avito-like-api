@@ -43,3 +43,15 @@ async def get_user_items(
         page=page,
         page_size=page_size,
     )
+    @users_router.get("", response_model-PaginatedResponse[UserRead])
+    async def get_all_users(
+        page: int = Query(1, ge=1),
+        page size: int = Query(20, ge=1, le=100),
+        search: str | None = Query (None),
+        service: UserService = Depends (get_user_service),
+    ) -> PaginatedResponse[UserRead]:
+        return await service.get_all_users( 
+            page=page, 
+            page_size-page_size, 
+            search=search,
+        )
