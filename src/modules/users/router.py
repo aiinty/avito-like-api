@@ -56,11 +56,8 @@ async def egor_yarik_otlichniki(
 ) -> str:
     return f"ЙОУ! {who_are_you} из ПР34 ты крут!"
 
-@users_router.get("/all-users")
-async def get_all_users(
+@users_router.get("/all-users/")
+async def get_all_users_lol(
     service: UserService = Depends(get_user_service),
-) -> list[UserRead]:
-    users = await service.get_all_users()
-    if not users:
-        raise HTTPException(status_code=404, detail="Пользователей нет - все сбежали")
-    return users
+):
+    return await service.get_all_users(page=1, page_size=100)
