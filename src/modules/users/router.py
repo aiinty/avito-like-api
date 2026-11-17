@@ -44,8 +44,8 @@ async def get_user_items(
         page_size=page_size,
     )
 
-@users_router.get("/pr34-one-love/")
-async def pr_34_one_love(
+@users_router.get("/egoryarik/")
+async def egor_yarik_otlichniki(
     who_are_you: str
 ) -> str:
     return f"ЙОУ! {who_are_you} из ПР34 ты крут!"
