@@ -20,8 +20,8 @@ class UserService():
         
         items = await self.repo.get_all(
             limit=page_size, 
-            offset=offset,
-            search=search
+            offset=offset
+            #search=search
         )
         total_count = await self.repo.count_all(search=search)
         
