@@ -9,6 +9,11 @@ from uuid import UUID
 class UserService():
     def __init__(self, repo: UserRepository):
         self.repo = repo
+
+    async def get_all(self) -> list[User]:
+        statement = select(User)
+        result = await self.session.execute(statement)
+        return list(result.scalars().all())
     
     async def _get_paginated_data(
         self,
